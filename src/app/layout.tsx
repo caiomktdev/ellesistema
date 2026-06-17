@@ -20,9 +20,9 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Line Fit | Suplementos & Performance",
+  title: "elle essencial",
   description:
-    "Line Fit — sua loja de suplementos e produtos para performance. Whey protein, creatina, pré-treino e muito mais.",
+    "elle essencial — moda fitness premium com tecido zero transparência e caimento pensado para treino e lifestyle.",
 };
 
 export default function RootLayout({
