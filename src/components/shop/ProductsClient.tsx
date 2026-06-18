@@ -17,17 +17,9 @@ interface Product {
   badge?: string | null;
 }
 
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-}
-
 interface Props {
   initialProducts: Product[];
-  categories: Category[];
   searchParams: {
-    categoria?: string;
     busca?: string;
     ordem?: string;
     destaque?: string;
@@ -41,26 +33,14 @@ const sortOptions = [
   { value: "relevancia", label: "Relevância" },
 ];
 
-const MOCK_CATEGORIES = [
-  { id: "1", name: "Tops & Cropped", slug: "tops" },
-  { id: "2", name: "Leggings", slug: "leggings" },
-  { id: "3", name: "Conjuntos", slug: "conjuntos" },
-  { id: "4", name: "Shorts", slug: "shorts" },
-  { id: "5", name: "Macacões", slug: "macacoes" },
-  { id: "6", name: "Acessórios", slug: "acessorios" },
-];
-
 export default function ProductsClient({
   initialProducts,
-  categories,
   searchParams,
 }: Props) {
   const router = useRouter();
   const [gridView, setGridView] = useState<"grid" | "list">("grid");
   const [sortOpen, setSortOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
-
-  const displayCategories = categories.length > 0 ? categories : MOCK_CATEGORIES;
 
   const buildUrl = (updates: Record<string, string | undefined>) => {
     const params = new URLSearchParams();
@@ -74,7 +54,6 @@ export default function ProductsClient({
   const currentSort = sortOptions.find((o) => o.value === (searchParams.ordem ?? "recente"))?.label ?? "Mais recentes";
 
   const activeFilters = [
-    searchParams.categoria && `${searchParams.categoria}`,
     searchParams.busca && `"${searchParams.busca}"`,
     searchParams.destaque === "true" && "Destaques",
   ].filter(Boolean) as string[];
@@ -84,12 +63,10 @@ export default function ProductsClient({
 
       {/* Page header */}
       <div className="mb-6 sm:mb-8">
-        <p className="text-[10px] text-[#999] tracking-[0.28em] uppercase mb-1.5">Line Fit</p>
+        <p className="text-[10px] text-[#999] tracking-[0.28em] uppercase mb-1.5">elle essencial</p>
         <h1 className="text-xl sm:text-3xl md:text-4xl font-black text-[#111] tracking-tight break-words">
           {searchParams.busca
             ? `Resultados para "${searchParams.busca}"`
-            : searchParams.categoria
-            ? searchParams.categoria.charAt(0).toUpperCase() + searchParams.categoria.slice(1)
             : "Todos os Produtos"}
         </h1>
         <p className="text-[#bbb] text-sm mt-1">{initialProducts.length} produtos encontrados</p>
@@ -108,32 +85,7 @@ export default function ProductsClient({
             FILTRAR
           </button>
 
-          {/* Category pills — desktop only */}
-          <div className="hidden lg:flex items-center gap-2 flex-1 overflow-x-auto scrollbar-none">
-            <button
-              onClick={() => router.push("/produtos")}
-              className={`flex-shrink-0 px-4 py-1.5 text-xs font-medium tracking-wide border transition-colors ${
-                !searchParams.categoria
-                  ? "border-[#111] bg-[#111] text-white"
-                  : "border-[#e0e0e0] text-[#888] hover:border-[#111] hover:text-[#111]"
-              }`}
-            >
-              Todos
-            </button>
-            {displayCategories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => router.push(buildUrl({ categoria: cat.slug }))}
-                className={`flex-shrink-0 px-4 py-1.5 text-xs font-medium tracking-wide border transition-colors ${
-                  searchParams.categoria === cat.slug
-                    ? "border-[#1a1a1a] bg-[#1a1a1a] text-white"
-                    : "border-[#e0e0e0] text-[#888] hover:border-[#1a1a1a] hover:text-[#1a1a1a]"
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
-          </div>
+          <div className="flex-1" />
 
           {/* Right controls */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-auto sm:ml-5 sm:pl-5 sm:border-l sm:border-[#ebebeb]">
@@ -229,32 +181,6 @@ export default function ProductsClient({
                     }`}
                   >
                     {o.label}
-                  </button>
-                ))}
-              </div>
-              <p className="text-xs font-semibold text-[#999] uppercase tracking-wider mb-3">Categorias</p>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => { router.push("/produtos"); setFiltersOpen(false); }}
-                  className={`px-4 py-2 text-xs font-medium border transition-colors ${
-                    !searchParams.categoria
-                      ? "border-[#111] bg-[#111] text-white"
-                      : "border-[#e0e0e0] text-[#888] hover:border-[#111]"
-                  }`}
-                >
-                  Todos
-                </button>
-                {displayCategories.map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => { router.push(buildUrl({ categoria: cat.slug })); setFiltersOpen(false); }}
-                    className={`px-4 py-2 text-xs font-medium border transition-colors ${
-                      searchParams.categoria === cat.slug
-                        ? "border-[#1a1a1a] bg-[#1a1a1a] text-white"
-                        : "border-[#e0e0e0] text-[#888] hover:border-[#1a1a1a]"
-                    }`}
-                  >
-                    {cat.name}
                   </button>
                 ))}
               </div>

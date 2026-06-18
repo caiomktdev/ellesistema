@@ -51,7 +51,6 @@ interface Props {
   sku?: string | null;
   images: ProductImage[];
   variants: Variant[];
-  categoryName?: string | null;
   reviews: Review[];
 }
 
@@ -66,7 +65,6 @@ export default function ProductDetail({
   sku,
   images,
   variants,
-  categoryName,
   reviews,
 }: Props) {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -118,12 +116,6 @@ export default function ProductDetail({
         <Link href="/" className="hover:text-[#1a1a1a] transition-colors">Início</Link>
         <ChevronRight className="w-3 h-3" />
         <Link href="/produtos" className="hover:text-[#1a1a1a] transition-colors">Produtos</Link>
-        {categoryName && (
-          <>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-[#bbb]">{categoryName}</span>
-          </>
-        )}
         <ChevronRight className="w-3 h-3" />
         <span className="text-[#111] truncate max-w-[180px] sm:max-w-xs">{name}</span>
       </nav>
@@ -170,11 +162,6 @@ export default function ProductDetail({
 
         {/* Info */}
         <div>
-          {categoryName && (
-            <p className="text-xs text-[#1a1a1a] font-semibold tracking-wider uppercase mb-2">
-              {categoryName}
-            </p>
-          )}
           <h1 className="text-2xl md:text-3xl font-black text-[#111] mb-3">{name}</h1>
 
           {reviews.length > 0 && (

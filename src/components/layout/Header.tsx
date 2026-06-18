@@ -17,28 +17,9 @@ const announcements = [
 
 /* ── Nav ── */
 const navLinks = [
-  {
-    label: "Coleções",
-    href: "/produtos",
-    sub: [
-      { label: "Coleção Pulsar", href: "/produtos?categoria=colecao-pulsar", desc: "Nova temporada 2026" },
-      { label: "Lançamentos", href: "/produtos?destaque=true", desc: "Peças recém chegadas" },
-      { label: "Mais Vendidos", href: "/produtos?ordem=relevancia", desc: "Favoritas das clientes" },
-    ],
-  },
-  {
-    label: "Roupas",
-    href: "/produtos?categoria=roupas",
-    sub: [
-      { label: "Tops & Cropped", href: "/produtos?categoria=tops", desc: "Com e sem bojo" },
-      { label: "Leggings", href: "/produtos?categoria=leggings", desc: "Cintura alta, compressão" },
-      { label: "Shorts", href: "/produtos?categoria=shorts", desc: "Treino e lifestyle" },
-      { label: "Conjuntos", href: "/produtos?categoria=conjuntos", desc: "Looks completos combinados" },
-      { label: "Macacões", href: "/produtos?categoria=macacoes", desc: "Peça única com estilo" },
-    ],
-  },
-  { label: "Acessórios", href: "/produtos?categoria=acessorios" },
-  { label: "Promoções", href: "/produtos?destaque=true" },
+  { label: "Produtos", href: "/produtos" },
+  { label: "Lançamentos", href: "/produtos?destaque=true" },
+  { label: "Promoções", href: "/produtos?ordem=menor" },
 ];
 
 export default function Header() {

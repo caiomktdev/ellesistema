@@ -10,7 +10,6 @@ async function getProduct(slug: string) {
       include: {
         images: { orderBy: { position: "asc" } },
         variants: true,
-        category: true,
         reviews: {
           where: { approved: true },
           include: { user: { select: { name: true } } },
@@ -55,7 +54,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       sku={data.sku ?? null}
       images={data.images}
       variants={data.variants}
-      categoryName={data.category?.name ?? null}
       reviews={data.reviews.map((r) => ({
         id: r.id,
         rating: r.rating,

@@ -33,13 +33,9 @@ export default function Footer() {
           {
             title: "Produtos",
             links: [
-              ["Coleção Pulsar", "/produtos?categoria=colecao-pulsar"],
-              ["Tops & Cropped", "/produtos?categoria=tops"],
-              ["Leggings", "/produtos?categoria=leggings"],
-              ["Shorts", "/produtos?categoria=shorts"],
-              ["Conjuntos", "/produtos?categoria=conjuntos"],
-              ["Macacões", "/produtos?categoria=macacoes"],
-              ["Acessórios", "/produtos?categoria=acessorios"],
+              ["Todos os Produtos", "/produtos"],
+              ["Lançamentos", "/produtos?destaque=true"],
+              ["Promoções", "/produtos?ordem=menor"],
             ],
           },
           {
