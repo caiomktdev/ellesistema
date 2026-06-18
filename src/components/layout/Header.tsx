@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, Search, User, X } from "lucide-react";
@@ -106,12 +107,7 @@ export default function Header() {
 
             {/* Logo */}
             <Link href="/" className="flex-shrink-0 z-10">
-              <span
-                className="text-[2rem] sm:text-[2.25rem] leading-none tracking-[0.18em] text-[#111] select-none"
-                style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontStyle: "italic" }}
-              >
-                elle
-              </span>
+              <Image src="/logo-elle.png" alt="elle essencial" width={120} height={40} className="h-8 sm:h-9 w-auto object-contain" priority />
             </Link>
 
             {/* Desktop nav */}

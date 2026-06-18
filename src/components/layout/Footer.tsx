@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Play, MessageCircle, Share2 } from "lucide-react";
 
 export default function Footer() {
@@ -7,12 +8,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-5 lg:px-8 py-12 md:py-16 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
         {/* Brand */}
         <div className="col-span-2 sm:col-span-2 lg:col-span-1">
-          <span
-            className="text-[2rem] leading-none tracking-[0.18em] text-[#111]"
-            style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontStyle: "italic" }}
-          >
-            elle
-          </span>
+          <Image src="/logo-elle.png" alt="elle essencial" width={100} height={34} className="h-8 w-auto object-contain" />
           <p className="text-sm text-[#999] mt-3 leading-relaxed max-w-xs">
             Kits de camisas premium com qualidade e durabilidade para o seu dia a dia.
           </p>
