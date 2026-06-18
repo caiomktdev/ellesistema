@@ -21,17 +21,12 @@ export const CATALOG_CATEGORIES = [
 ];
 
 const KIT4_DESCRIPTION = `<p>Kit com <strong>4 camisas</strong> da mesma cor. Qualidade premium, tecido macio e durável, ideal para o dia a dia.</p>`;
-const KIT2_DESCRIPTION = `<p>Kit com <strong>2 camisas</strong> da mesma cor. Qualidade premium, tecido macio e durável, ideal para o dia a dia.</p>`;
 
 export const CATALOG_PRODUCTS: CatalogProduct[] = [
   { id: "cat-1", name: "Kit 4 Camisas Brancas", slug: "kit-4-camisas-brancas", price: 29990, compareAt: null, stock: 50, sku: "EL-K4-BRA", featured: true, badge: null, categorySlug: "kits", categoryName: "Kits", description: KIT4_DESCRIPTION, weight: 0.8 },
   { id: "cat-2", name: "Kit 4 Camisas Pretas", slug: "kit-4-camisas-pretas", price: 29990, compareAt: null, stock: 50, sku: "EL-K4-PRE", featured: true, badge: null, categorySlug: "kits", categoryName: "Kits", description: KIT4_DESCRIPTION, weight: 0.8 },
   { id: "cat-3", name: "Kit 4 Camisas Ofwhite", slug: "kit-4-camisas-ofwhite", price: 29990, compareAt: null, stock: 50, sku: "EL-K4-OFW", featured: true, badge: null, categorySlug: "kits", categoryName: "Kits", description: KIT4_DESCRIPTION, weight: 0.8 },
   { id: "cat-4", name: "Kit 4 Camisas Azul Marinho", slug: "kit-4-camisas-azul-marinho", price: 29990, compareAt: null, stock: 50, sku: "EL-K4-AZM", featured: true, badge: null, categorySlug: "kits", categoryName: "Kits", description: KIT4_DESCRIPTION, weight: 0.8 },
-  { id: "cat-5", name: "Kit 2 Camisas Brancas", slug: "kit-2-camisas-brancas", price: 14995, compareAt: null, stock: 50, sku: "EL-K2-BRA", featured: false, badge: null, categorySlug: "kits", categoryName: "Kits", description: KIT2_DESCRIPTION, weight: 0.4 },
-  { id: "cat-6", name: "Kit 2 Camisas Pretas", slug: "kit-2-camisas-pretas", price: 14995, compareAt: null, stock: 50, sku: "EL-K2-PRE", featured: false, badge: null, categorySlug: "kits", categoryName: "Kits", description: KIT2_DESCRIPTION, weight: 0.4 },
-  { id: "cat-7", name: "Kit 2 Camisas Ofwhite", slug: "kit-2-camisas-ofwhite", price: 14995, compareAt: null, stock: 50, sku: "EL-K2-OFW", featured: false, badge: null, categorySlug: "kits", categoryName: "Kits", description: KIT2_DESCRIPTION, weight: 0.4 },
-  { id: "cat-8", name: "Kit 2 Camisas Azul Marinho", slug: "kit-2-camisas-azul-marinho", price: 14995, compareAt: null, stock: 50, sku: "EL-K2-AZM", featured: false, badge: null, categorySlug: "kits", categoryName: "Kits", description: KIT2_DESCRIPTION, weight: 0.4 },
 ];
 
 export function getCatalogVariants(_productId: string) {

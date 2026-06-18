@@ -37,10 +37,6 @@ async function main() {
     { id: "cat-2", name: "Kit 4 Camisas Pretas", slug: "kit-4-camisas-pretas", price: 29990, stock: 50, sku: "EL-K4-PRE", featured: true, weight: 0.8, image: "/products/camisa-preta.png" },
     { id: "cat-3", name: "Kit 4 Camisas Ofwhite", slug: "kit-4-camisas-ofwhite", price: 29990, stock: 50, sku: "EL-K4-OFW", featured: true, weight: 0.8, image: "/products/camisa-ofwhite.png" },
     { id: "cat-4", name: "Kit 4 Camisas Azul Marinho", slug: "kit-4-camisas-azul-marinho", price: 29990, stock: 50, sku: "EL-K4-AZM", featured: true, weight: 0.8, image: "/products/camisa-preta.png" },
-    { id: "cat-5", name: "Kit 2 Camisas Brancas", slug: "kit-2-camisas-brancas", price: 14995, stock: 50, sku: "EL-K2-BRA", featured: false, weight: 0.4, image: "/products/camisa-branca.png" },
-    { id: "cat-6", name: "Kit 2 Camisas Pretas", slug: "kit-2-camisas-pretas", price: 14995, stock: 50, sku: "EL-K2-PRE", featured: false, weight: 0.4, image: "/products/camisa-preta.png" },
-    { id: "cat-7", name: "Kit 2 Camisas Ofwhite", slug: "kit-2-camisas-ofwhite", price: 14995, stock: 50, sku: "EL-K2-OFW", featured: false, weight: 0.4, image: "/products/camisa-ofwhite.png" },
-    { id: "cat-8", name: "Kit 2 Camisas Azul Marinho", slug: "kit-2-camisas-azul-marinho", price: 14995, stock: 50, sku: "EL-K2-AZM", featured: false, weight: 0.4, image: "/products/camisa-preta.png" },
   ];
 
   for (const p of products) {

@@ -9,15 +9,7 @@ export const PRODUCT_MEDIA: Record<string, ProductMedia> = {
     primary: "/products/camisa-branca.png",
     sizeGroups: [],
   },
-  "kit-2-camisas-brancas": {
-    primary: "/products/camisa-branca.png",
-    sizeGroups: [],
-  },
   "kit-4-camisas-pretas": {
-    primary: "/products/camisa-preta.png",
-    sizeGroups: [],
-  },
-  "kit-2-camisas-pretas": {
     primary: "/products/camisa-preta.png",
     sizeGroups: [],
   },
@@ -25,15 +17,7 @@ export const PRODUCT_MEDIA: Record<string, ProductMedia> = {
     primary: "/products/camisa-ofwhite.png",
     sizeGroups: [],
   },
-  "kit-2-camisas-ofwhite": {
-    primary: "/products/camisa-ofwhite.png",
-    sizeGroups: [],
-  },
   "kit-4-camisas-azul-marinho": {
-    primary: "/products/camisa-preta.png",
-    sizeGroups: [],
-  },
-  "kit-2-camisas-azul-marinho": {
     primary: "/products/camisa-preta.png",
     sizeGroups: [],
   },
