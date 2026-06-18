@@ -289,7 +289,7 @@ export default function ProductDetail({
           {/* Trust badges */}
           <div className="grid grid-cols-2 gap-3 mb-6">
             {[
-              { icon: Truck, text: "Frete grátis acima de R$199" },
+              { icon: Truck, text: "Frete grátis acima de R$500" },
               { icon: Shield, text: "Compra 100% segura" },
             ].map(({ icon: Icon, text }) => (
               <div

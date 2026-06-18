@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
 const DEFAULT_SHIPPING = 1990;
-const FREE_SHIPPING_MIN = 19900;
+const FREE_SHIPPING_MIN = 50000;
 
 export async function calculateShipping(subtotal: number, totalWeight = 0.5): Promise<{ cost: number; name: string; days: number }> {
   try {

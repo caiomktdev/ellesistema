@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import type { AppliedCoupon } from "@/store/cart";
 
-const FREE_SHIPPING_MIN = 19900;
+const FREE_SHIPPING_MIN = 50000;
 const DEFAULT_SHIPPING = 1990;
 
 export { FREE_SHIPPING_MIN, DEFAULT_SHIPPING };

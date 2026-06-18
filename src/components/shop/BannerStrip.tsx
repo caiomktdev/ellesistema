@@ -11,7 +11,7 @@ const features = [
   {
     icon: Truck,
     title: "FRETE GRÁTIS",
-    desc: "Sul e Sudeste acima de R$ 199",
+    desc: "Sul e Sudeste acima de R$ 500",
   },
   {
     icon: ShieldCheck,

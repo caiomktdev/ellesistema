@@ -10,7 +10,7 @@ import CartDrawer from "./CartDrawer";
 
 /* ── Announcement bar ── */
 const announcements = [
-  { full: "FRETE GRÁTIS EM PEDIDOS ACIMA DE R$ 199", short: "FRETE GRÁTIS ACIMA DE R$ 199" },
+  { full: "FRETE GRÁTIS EM PEDIDOS ACIMA DE R$ 500", short: "FRETE GRÁTIS ACIMA DE R$ 500" },
   { full: "CUPOM  ELLEBASIC10  — 10% OFF NA PRIMEIRA COMPRA", short: "ELLEBASIC10 — 10% OFF" },
   { full: "ZERO TRANSPARÊNCIA · TECIDO PREMIUM NACIONAL", short: "ZERO TRANSPARÊNCIA · TECIDO PREMIUM" },
 ];
