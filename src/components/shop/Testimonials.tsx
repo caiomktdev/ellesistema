@@ -4,32 +4,32 @@ import { motion } from "framer-motion";
 
 const testimonials = [
   {
-    name: "Júlia M.",
-    role: "Crossfit atleta",
+    name: "Rodrigo A.",
+    role: "Empresário",
     rating: 5,
-    text: "A legging cintura alta é incrível! Zero transparência mesmo agachando fundo. Comprei 3 cores diferentes.",
-    initials: "JM",
+    text: "Comprei o kit 4 camisas brancas e a qualidade superou minhas expectativas. Tecido macio, caimento perfeito e não amassa fácil. Já pedi mais dois kits.",
+    initials: "RA",
   },
   {
-    name: "Beatriz C.",
-    role: "Personal trainer",
+    name: "Marcos V.",
+    role: "Gerente comercial",
     rating: 5,
-    text: "Entrega super rápida e qualidade impecável. Indico para todas as minhas alunas. Tecido não deforma nem perde cor.",
-    initials: "BC",
+    text: "Uso o kit preto no dia a dia do trabalho. Entrega rápida, embalagem caprichada e as camisas são exatamente como descritas. Recomendo muito.",
+    initials: "MV",
   },
   {
-    name: "Fernanda S.",
-    role: "Pilates & yoga",
+    name: "Felipe T.",
+    role: "Autônomo",
     rating: 5,
-    text: "O conjunto Pulsar é perfeito! Caimento diferenciado, tecido macio e a calça não cai durante o treino.",
-    initials: "FS",
+    text: "O kit ofwhite ficou sensacional. Cor bonita, tecido de qualidade e o preço pelo kit compensa demais. Virou minha marca favorita de camisas.",
+    initials: "FT",
   },
   {
-    name: "Camila R.",
-    role: "Musculação",
+    name: "Lucas P.",
+    role: "Professor",
     rating: 5,
-    text: "Já testei várias marcas e a Line Fit superou todas. Top com bojo que realmente sustenta e não incomoda.",
-    initials: "CR",
+    text: "Comprei o kit 2 para testar e adorei. A camisa não desbota após várias lavagens e o caimento continua ótimo. Com certeza vou pedir o kit com 4.",
+    initials: "LP",
   },
 ];
 
