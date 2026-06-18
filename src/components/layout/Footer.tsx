@@ -14,7 +14,7 @@ export default function Footer() {
             elle
           </span>
           <p className="text-sm text-[#999] mt-3 leading-relaxed max-w-xs">
-            Moda fitness premium com tecido zero transparência e caimento pensado para treino e lifestyle.
+            Kits de camisas premium com qualidade e durabilidade para o seu dia a dia.
           </p>
           <div className="flex gap-2.5 mt-5">
             {[Share2, Play, MessageCircle].map((Icon, i) => (
