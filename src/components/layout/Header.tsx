@@ -16,11 +16,7 @@ const announcements = [
 ];
 
 /* ── Nav ── */
-const navLinks = [
-  { label: "Produtos", href: "/produtos" },
-  { label: "Lançamentos", href: "/produtos?destaque=true" },
-  { label: "Promoções", href: "/produtos?ordem=menor" },
-];
+const navLinks: { label: string; href: string }[] = [];
 
 export default function Header() {
   const pathname = usePathname();

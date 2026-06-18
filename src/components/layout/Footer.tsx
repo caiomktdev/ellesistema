@@ -31,14 +31,6 @@ export default function Footer() {
 
         {[
           {
-            title: "Produtos",
-            links: [
-              ["Todos os Produtos", "/produtos"],
-              ["Lançamentos", "/produtos?destaque=true"],
-              ["Promoções", "/produtos?ordem=menor"],
-            ],
-          },
-          {
             title: "Ajuda",
             links: [
               ["Minha Conta", "/conta"],

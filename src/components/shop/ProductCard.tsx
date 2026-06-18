@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Heart } from "lucide-react";
@@ -37,31 +37,16 @@ export default function ProductCard({
 }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
   const [wished, setWished] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const media = getProductMedia(slug);
   const primary = imageUrl || media.primary;
   const hasHoverImage = Boolean(media.hover);
-  const hasHoverVideo = Boolean(media.hoverVideo);
-  const showHoverMedia = hovered && (hasHoverImage || hasHoverVideo);
+  const showHoverMedia = hovered && hasHoverImage;
 
   const discount = compareAt ? Math.round((1 - price / compareAt) * 100) : null;
 
-  const handleEnter = () => {
-    setHovered(true);
-    if (media.hoverVideo && videoRef.current) {
-      videoRef.current.currentTime = 0;
-      void videoRef.current.play();
-    }
-  };
-
-  const handleLeave = () => {
-    setHovered(false);
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  };
+  const handleEnter = () => setHovered(true);
+  const handleLeave = () => setHovered(false);
 
   return (
     <div
@@ -94,22 +79,6 @@ export default function ProductCard({
               }`}
               sizes="(max-width: 768px) 50vw, 25vw"
             />
-          )}
-
-          {/* Vídeo no hover */}
-          {media.hoverVideo && (
-            <video
-              ref={videoRef}
-              muted
-              loop
-              playsInline
-              preload="none"
-              className={`absolute inset-0 z-[1] h-full w-full object-cover transition-opacity duration-500 ${
-                showHoverMedia && hasHoverVideo ? "opacity-100" : "opacity-0 pointer-events-none"
-              }`}
-            >
-              <source src={media.hoverVideo} type="video/mp4" />
-            </video>
           )}
 
           {/* Badges */}
