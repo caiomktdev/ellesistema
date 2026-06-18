@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, Search, User, ChevronDown, X } from "lucide-react";
+import { ShoppingBag, Search, User, X } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import CartDrawer from "./CartDrawer";
 
@@ -27,14 +27,11 @@ export default function Header() {
   const isOverlay = pathname === "/";
   const [annIdx, setAnnIdx] = useState(0);
   const [scrolled, setScrolled] = useState(false);
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [headerHeight, setHeaderHeight] = useState(88);
   const { itemCount, openCart } = useCartStore();
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
   /* Rotate announcement bar */
@@ -68,14 +65,6 @@ export default function Header() {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
-
-  const handleMouseEnter = (label: string) => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setOpenMenu(label);
-  };
-  const handleMouseLeave = () => {
-    closeTimer.current = setTimeout(() => setOpenMenu(null), 120);
-  };
 
   return (
     <>
@@ -132,76 +121,13 @@ export default function Header() {
             {/* Desktop nav */}
             <nav className="hidden lg:flex items-center gap-0">
               {navLinks.map((link) => (
-                <div
+                <Link
                   key={link.href}
-                  className="relative"
-                  onMouseEnter={() => link.sub ? handleMouseEnter(link.label) : undefined}
-                  onMouseLeave={link.sub ? handleMouseLeave : undefined}
+                  href={link.href}
+                  className="px-5 py-2 text-sm font-medium text-[#333] hover:text-[#1a1a1a] transition-colors"
                 >
-                  <Link
-                    href={link.href}
-                    className="flex items-center gap-1 px-5 py-2 text-sm font-medium text-[#333] hover:text-[#1a1a1a] transition-colors"
-                  >
-                    {link.label}
-                    {link.sub && (
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          openMenu === link.label ? "rotate-180 text-[#1a1a1a]" : "opacity-40"
-                        }`}
-                      />
-                    )}
-                  </Link>
-
-                  {/* Glass dropdown */}
-                  <AnimatePresence>
-                    {link.sub && openMenu === link.label && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.97 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.97 }}
-                        transition={{ duration: 0.18, ease: "easeOut" }}
-                        onMouseEnter={() => handleMouseEnter(link.label)}
-                        onMouseLeave={handleMouseLeave}
-                        className="absolute top-full left-0 mt-3 z-50 min-w-[260px]"
-                        style={{ transformOrigin: "top left" }}
-                      >
-                        <div
-                          className="rounded-2xl overflow-hidden py-3"
-                          style={{
-                            background: "rgba(248,245,255,0.95)",
-                            backdropFilter: "blur(28px) saturate(200%)",
-                            WebkitBackdropFilter: "blur(28px) saturate(200%)",
-                            border: "1px solid rgba(98,41,157,0.18)",
-                            boxShadow:
-                              "0 16px 48px rgba(98,41,157,0.14), 0 4px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.95)",
-                          }}
-                        >
-                          {link.sub.map((s, i) => (
-                            <motion.div
-                              key={s.href + i}
-                              initial={{ opacity: 0, x: -8 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: i * 0.05 }}
-                            >
-                              <Link
-                                href={s.href}
-                                onClick={() => setOpenMenu(null)}
-                                className="flex flex-col px-5 py-2.5 hover:bg-[#1a1a1a]/10 transition-colors group"
-                              >
-                                <span className="text-sm font-semibold text-[#111] group-hover:text-[#1a1a1a] transition-colors">
-                                  {s.label}
-                                </span>
-                                {s.desc && (
-                                  <span className="text-[11px] text-[#999] mt-0.5">{s.desc}</span>
-                                )}
-                              </Link>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                  {link.label}
+                </Link>
               ))}
             </nav>
 
@@ -329,63 +255,18 @@ export default function Header() {
                   <div className="py-4 px-2">
                     {navLinks.map((link, i) => (
                       <motion.div
-                        key={link.href + link.label}
+                        key={link.href}
                         initial={{ opacity: 0, x: -12 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.06 }}
                       >
-                        {link.sub ? (
-                          <>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setMobileExpanded((v) =>
-                                  v === link.label ? null : link.label
-                                )
-                              }
-                              className="flex w-full items-center justify-between px-4 py-3.5 text-[#111] hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 rounded-xl transition-colors font-medium text-sm"
-                            >
-                              {link.label}
-                              <ChevronDown
-                                className={`w-4 h-4 opacity-40 transition-transform ${
-                                  mobileExpanded === link.label ? "rotate-180" : ""
-                                }`}
-                              />
-                            </button>
-                            <AnimatePresence>
-                              {mobileExpanded === link.label && (
-                                <motion.div
-                                  initial={{ height: 0, opacity: 0 }}
-                                  animate={{ height: "auto", opacity: 1 }}
-                                  exit={{ height: 0, opacity: 0 }}
-                                  className="overflow-hidden pl-2"
-                                >
-                                  {link.sub.map((s) => (
-                                    <Link
-                                      key={s.href}
-                                      href={s.href}
-                                      onClick={() => {
-                                        setMobileOpen(false);
-                                        setMobileExpanded(null);
-                                      }}
-                                      className="block px-4 py-2.5 text-sm text-[#666] hover:text-[#1a1a1a] rounded-lg"
-                                    >
-                                      {s.label}
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </>
-                        ) : (
-                          <Link
-                            href={link.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="flex items-center justify-between px-4 py-3.5 text-[#111] hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 rounded-xl transition-colors font-medium text-sm"
-                          >
-                            {link.label}
-                          </Link>
-                        )}
+                        <Link
+                          href={link.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center px-4 py-3.5 text-[#111] hover:text-[#1a1a1a] hover:bg-[#1a1a1a]/5 rounded-xl transition-colors font-medium text-sm"
+                        >
+                          {link.label}
+                        </Link>
                       </motion.div>
                     ))}
 
