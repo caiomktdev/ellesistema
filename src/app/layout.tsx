@@ -22,7 +22,7 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: "elle essencial",
   description:
-    "elle essencial — moda fitness premium com tecido zero transparência e caimento pensado para treino e lifestyle.",
+    "elle essencial — kits de camisas premium com qualidade e durabilidade para o seu dia a dia.",
 };
 
 export default function RootLayout({
