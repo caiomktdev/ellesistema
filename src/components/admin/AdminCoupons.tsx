@@ -20,7 +20,7 @@ interface Coupon {
 }
 
 const MOCK: Coupon[] = [
-  { id: "1", code: "LINEFIT10", description: "10% de desconto", type: "percent", value: 10, minOrder: 0, maxUses: null, uses: 234, active: true, expiresAt: null, createdAt: new Date("2025-01-01") },
+  { id: "1", code: "ELLEBASIC10", description: "10% de desconto", type: "percent", value: 10, minOrder: 0, maxUses: null, uses: 234, active: true, expiresAt: null, createdAt: new Date("2025-01-01") },
   { id: "2", code: "FRETEGRATIS", description: "Frete grátis", type: "shipping", value: 0, minOrder: 9900, maxUses: 500, uses: 312, active: true, expiresAt: new Date("2025-12-31"), createdAt: new Date("2025-06-01") },
   { id: "3", code: "PROMO20", description: "R$20 de desconto", type: "fixed", value: 2000, minOrder: 5000, maxUses: 100, uses: 89, active: true, expiresAt: new Date("2025-11-30"), createdAt: new Date("2025-09-01") },
   { id: "4", code: "BLACKFRIDAY", description: "Black Friday 30%", type: "percent", value: 30, minOrder: 0, maxUses: 200, uses: 0, active: false, expiresAt: new Date("2025-11-30"), createdAt: new Date("2025-10-01") },
@@ -195,7 +195,7 @@ export default function AdminCoupons({ coupons: propCoupons }: { coupons: Coupon
               </div>
               <div className="p-5 space-y-4">
                 {[
-                  { field: "code", label: "Código *", placeholder: "LINEFIT10" },
+                  { field: "code", label: "Código *", placeholder: "ELLEBASIC10" },
                   { field: "description", label: "Descrição", placeholder: "10% de desconto para novos clientes" },
                 ].map(({ field, label, placeholder }) => (
                   <div key={field}>

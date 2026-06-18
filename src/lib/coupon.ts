@@ -9,7 +9,7 @@ export type CouponResult = {
 };
 
 const MOCK_COUPONS: Record<string, Omit<CouponResult, "valid" | "code">> = {
-  LINEFIT10: { type: "percent", discount: 10, message: "10% de desconto aplicado" },
+  ELLEBASIC10: { type: "percent", discount: 10, message: "10% de desconto aplicado" },
   FRETEGRATIS: { type: "shipping", discount: 0, message: "Frete grátis aplicado" },
 };
 

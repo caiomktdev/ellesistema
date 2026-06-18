@@ -151,7 +151,7 @@ export default function CartPage() {
                 <input
                   value={couponInput}
                   onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
-                  placeholder="LINEFIT10"
+                  placeholder="ELLEBASIC10"
                   className="flex-1 min-w-0 bg-[#faf9fd] border border-[#e8e8e8] focus:border-[#aaaaaa] rounded-lg px-3 py-2.5 text-sm text-[#111] outline-none transition-colors placeholder-[#bbb]"
                 />
                 <button
@@ -164,7 +164,7 @@ export default function CartPage() {
               </div>
             )}
             {couponError && <p className="text-xs text-red-500 mt-2">{couponError}</p>}
-            <p className="text-xs text-[#bbb] mt-2">Experimente: LINEFIT10 ou FRETEGRATIS</p>
+            <p className="text-xs text-[#bbb] mt-2">Experimente: ELLEBASIC10 ou FRETEGRATIS</p>
           </div>
 
           <div className="bg-white border border-[#f0f0f0] rounded-2xl p-5 space-y-3 shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
