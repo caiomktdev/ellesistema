@@ -12,7 +12,7 @@ export default function HeroSection() {
             alt="elle essencial"
             fill
             priority
-            className="object-cover object-center"
+            className="object-cover object-top"
             sizes="100vw"
           />
         </Link>
