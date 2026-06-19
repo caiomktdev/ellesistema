@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -14,7 +15,6 @@ import {
   Settings,
   Menu,
   X,
-  Dumbbell,
   ChevronRight,
   LogOut,
 } from "lucide-react";
@@ -57,13 +57,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="p-5 border-b border-[#f0f0f0]">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#1a1a1a] rounded-lg flex items-center justify-center">
-                <Dumbbell className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <span className="text-base font-black text-[#111]">LINE<span className="text-[#1a1a1a]">FIT</span></span>
-                <span className="block text-[10px] text-[#bbb] -mt-0.5">Admin Panel</span>
-              </div>
+              <Image src="/logo-elle.png" alt="elle essencial" width={80} height={28} className="h-7 w-auto object-contain" />
+              <span className="block text-[10px] text-[#bbb]">Admin Panel</span>
             </Link>
             <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-1.5 text-[#bbb] hover:text-[#1a1a1a] rounded-lg transition-colors">
               <X className="w-4 h-4" />

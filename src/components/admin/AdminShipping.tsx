@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Truck, Edit2, Trash2, Check, X } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { createShippingRule, updateShippingRule, deleteShippingRule } from "@/lib/admin-actions";
 
 interface ShippingRule {
   id: string;
@@ -24,19 +26,21 @@ const MOCK: ShippingRule[] = [
   { id: "4", name: "Frete Grátis", minWeight: 0, maxWeight: null, minValue: 50000, maxValue: null, price: 0, days: 7, active: true },
 ];
 
-const emptyForm = {
-  name: "", minWeight: "0", maxWeight: "", minValue: "0", maxValue: "", price: "", days: "7",
-};
-
+const emptyForm = { name: "", minWeight: "0", maxWeight: "", minValue: "0", maxValue: "", price: "", days: "7" };
 const inputClass = "w-full bg-[#faf9fd] border border-[#e8e8e8] focus:border-[#aaaaaa] rounded-xl px-4 py-2.5 text-sm text-[#111] outline-none transition-colors placeholder-[#bbb]";
 
 export default function AdminShipping({ rules: propRules }: { rules: ShippingRule[] }) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [rules, setRules] = useState<ShippingRule[]>(propRules.length > 0 ? propRules : MOCK);
   const [modal, setModal] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
+  const [error, setError] = useState<string | null>(null);
 
-  const openNew = () => { setForm(emptyForm); setEditId(null); setModal(true); };
+  const isMock = propRules.length === 0;
+
+  const openNew = () => { setForm(emptyForm); setEditId(null); setModal(true); setError(null); };
   const openEdit = (r: ShippingRule) => {
     setForm({
       name: r.name,
@@ -49,26 +53,62 @@ export default function AdminShipping({ rules: propRules }: { rules: ShippingRul
     });
     setEditId(r.id);
     setModal(true);
+    setError(null);
   };
 
+  const buildData = () => ({
+    name: form.name,
+    minWeight: parseFloat(form.minWeight) || 0,
+    maxWeight: form.maxWeight ? parseFloat(form.maxWeight) : null,
+    minValue: Math.round(parseFloat(form.minValue) * 100) || 0,
+    maxValue: form.maxValue ? Math.round(parseFloat(form.maxValue) * 100) : null,
+    price: Math.round(parseFloat(form.price) * 100) || 0,
+    days: parseInt(form.days) || 7,
+    active: true,
+  });
+
   const handleSave = () => {
-    const rule: ShippingRule = {
-      id: editId ?? Date.now().toString(),
-      name: form.name,
-      minWeight: parseFloat(form.minWeight) || 0,
-      maxWeight: form.maxWeight ? parseFloat(form.maxWeight) : null,
-      minValue: Math.round(parseFloat(form.minValue) * 100) || 0,
-      maxValue: form.maxValue ? Math.round(parseFloat(form.maxValue) * 100) : null,
-      price: Math.round(parseFloat(form.price) * 100) || 0,
-      days: parseInt(form.days) || 7,
-      active: true,
-    };
-    if (editId) {
-      setRules((prev) => prev.map((r) => r.id === editId ? rule : r));
-    } else {
-      setRules((prev) => [rule, ...prev]);
+    if (!form.name) return;
+    const data = buildData();
+
+    if (isMock) {
+      if (editId) {
+        setRules((prev) => prev.map((r) => r.id === editId ? { ...r, ...data } : r));
+      } else {
+        setRules((prev) => [{ id: Date.now().toString(), ...data }, ...prev]);
+      }
+      setModal(false);
+      return;
     }
-    setModal(false);
+
+    startTransition(async () => {
+      try {
+        if (editId) {
+          await updateShippingRule(editId, data);
+          setRules((prev) => prev.map((r) => r.id === editId ? { ...r, ...data } : r));
+        } else {
+          const created = await createShippingRule(data);
+          setRules((prev) => [created, ...prev]);
+        }
+        router.refresh();
+        setModal(false);
+      } catch {
+        setError("Erro ao salvar regra de frete.");
+      }
+    });
+  };
+
+  const handleDelete = (id: string) => {
+    if (isMock) { setRules((prev) => prev.filter((r) => r.id !== id)); return; }
+    startTransition(async () => {
+      try {
+        await deleteShippingRule(id);
+        setRules((prev) => prev.filter((r) => r.id !== id));
+        router.refresh();
+      } catch {
+        setError("Erro ao excluir regra.");
+      }
+    });
   };
 
   const set = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -76,12 +116,24 @@ export default function AdminShipping({ rules: propRules }: { rules: ShippingRul
 
   return (
     <div className="space-y-6">
+      {isMock && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-700">
+          Modo demonstração — conecte um banco de dados para persistir alterações.
+        </div>
+      )}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-600 flex items-center justify-between">
+          {error}
+          <button onClick={() => setError(null)} className="ml-3 text-red-400 hover:text-red-600"><X className="w-4 h-4" /></button>
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-black text-[#111]">Frete</h1>
           <p className="text-[#999] text-sm">Gerencie as regras de frete da loja</p>
         </div>
-        <button onClick={openNew} className="flex items-center gap-2 bg-[#1a1a1a] hover:bg-[#000000] text-white font-bold px-5 py-2.5 rounded-xl transition-colors shadow-[0_4px_12px_rgba(98,41,157,0.25)]">
+        <button onClick={openNew} className="flex items-center gap-2 bg-[#1a1a1a] hover:bg-[#000000] text-white font-bold px-5 py-2.5 rounded-xl transition-colors shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
           <Plus className="w-4 h-4" />
           Nova regra
         </button>
@@ -89,12 +141,7 @@ export default function AdminShipping({ rules: propRules }: { rules: ShippingRul
 
       <div className="grid md:grid-cols-2 gap-4">
         {rules.map((r) => (
-          <motion.div
-            key={r.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white border border-[#f0f0f0] rounded-2xl p-5 shadow-[0_1px_4px_rgba(0,0,0,0.04)]"
-          >
+          <motion.div key={r.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white border border-[#f0f0f0] rounded-2xl p-5 shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className={`p-2.5 rounded-xl ${r.price === 0 ? "bg-[#f5f5f5]" : "bg-[#edf4ff]"}`}>
@@ -108,15 +155,10 @@ export default function AdminShipping({ rules: propRules }: { rules: ShippingRul
                 </div>
               </div>
               <div className="flex gap-1.5">
-                <button onClick={() => openEdit(r)} className="p-1.5 text-[#bbb] hover:text-[#1a1a1a] hover:bg-[#f5f5f5] rounded-lg transition-colors">
-                  <Edit2 className="w-4 h-4" />
-                </button>
-                <button onClick={() => setRules((prev) => prev.filter((x) => x.id !== r.id))} className="p-1.5 text-[#bbb] hover:text-red-400 hover:bg-red-50 rounded-lg transition-colors">
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <button onClick={() => openEdit(r)} className="p-1.5 text-[#bbb] hover:text-[#1a1a1a] hover:bg-[#f5f5f5] rounded-lg transition-colors"><Edit2 className="w-4 h-4" /></button>
+                <button onClick={() => handleDelete(r.id)} disabled={isPending} className="p-1.5 text-[#bbb] hover:text-red-400 hover:bg-red-50 rounded-lg transition-colors"><Trash2 className="w-4 h-4" /></button>
               </div>
             </div>
-
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div className="bg-[#faf9fd] border border-[#f0f0f0] rounded-xl p-3">
                 <p className="text-xs text-[#bbb] mb-1">Prazo</p>
@@ -137,22 +179,14 @@ export default function AdminShipping({ rules: propRules }: { rules: ShippingRul
         ))}
       </div>
 
-      {/* Modal */}
       <AnimatePresence>
         {modal && (
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setModal(false)} className="fixed inset-0 bg-black/30 z-50" />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border border-[#f0f0f0] rounded-2xl w-full max-w-md z-50 shadow-[0_24px_64px_rgba(98,41,157,0.15)]"
-            >
+            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border border-[#f0f0f0] rounded-2xl w-full max-w-md z-50 shadow-[0_24px_64px_rgba(0,0,0,0.15)]">
               <div className="flex items-center justify-between p-5 border-b border-[#f0f0f0]">
                 <h2 className="font-bold text-[#111]">{editId ? "Editar regra" : "Nova regra de frete"}</h2>
-                <button onClick={() => setModal(false)} className="p-2 text-[#bbb] hover:text-[#1a1a1a] rounded-lg hover:bg-[#f5f5f5] transition-colors">
-                  <X className="w-4 h-4" />
-                </button>
+                <button onClick={() => setModal(false)} className="p-2 text-[#bbb] hover:text-[#1a1a1a] rounded-lg hover:bg-[#f5f5f5] transition-colors"><X className="w-4 h-4" /></button>
               </div>
               <div className="p-5 space-y-4">
                 <div>
@@ -177,9 +211,9 @@ export default function AdminShipping({ rules: propRules }: { rules: ShippingRul
               </div>
               <div className="flex gap-3 p-5 border-t border-[#f0f0f0]">
                 <button onClick={() => setModal(false)} className="px-5 py-2.5 border border-[#e8e8e8] rounded-xl text-sm text-[#888] hover:text-[#1a1a1a] hover:border-[#aaaaaa] transition-colors">Cancelar</button>
-                <button onClick={handleSave} className="flex-1 flex items-center justify-center gap-2 bg-[#1a1a1a] hover:bg-[#000000] text-white font-bold py-2.5 rounded-xl transition-colors">
+                <button onClick={handleSave} disabled={isPending} className="flex-1 flex items-center justify-center gap-2 bg-[#1a1a1a] hover:bg-[#000000] text-white font-bold py-2.5 rounded-xl transition-colors disabled:opacity-60">
                   <Check className="w-4 h-4" />
-                  {editId ? "Salvar" : "Criar regra"}
+                  {isPending ? "Salvando..." : editId ? "Salvar" : "Criar regra"}
                 </button>
               </div>
             </motion.div>
